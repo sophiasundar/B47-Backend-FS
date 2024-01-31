@@ -32,7 +32,7 @@ app.get('/',(req,res)=>{
 
 
 //  for getting all phone's data  
-app.get('/allphones',async(req,res)=>{
+app.get('/phones',async(req,res)=>{
      const phones = await client
     .db("phone-catalog")
     .collection("phones")
@@ -42,7 +42,7 @@ app.get('/allphones',async(req,res)=>{
 });
 
 //  for deleting phone's data by id
-app.delete('/phone/:id',async(req,res)=>{
+app.delete('/phones/:id',async(req,res)=>{
     const {id} = req.params;
     const phone = await client
    .db("phone-catalog")
@@ -52,14 +52,26 @@ app.delete('/phone/:id',async(req,res)=>{
 });
 
 //  for adding phones
-app.post('/addphone',async(req,res)=>{
-    const newPhone = res.body;
+app.post('/phones',async(req,res)=>{
+    const newPhone = req.body;
     const result = await client
    .db("phone-catalog")
    .collection("phones")
    .insertMany(newPhone);
    res.send(result); 
 }); 
+
+//  for editing phones data
+    // put= post and get 
+app.put("/phones/:id", async (req,res)=>{
+    const { id } = req.params;
+    const updatePhones = req.body;
+    const output = await client
+   .db("phone-catalog")
+   .collection("phones")
+   .updateOne({id : id}, {$set: updatePhones});
+   res.send(output); 
+});
 
 app.listen(PORT, ()=> 
 console.log("Server started on the PORT", PORT))
