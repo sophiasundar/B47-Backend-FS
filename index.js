@@ -1,5 +1,6 @@
 import express from "express";
 import { MongoClient } from "mongodb";
+import mongo from "mongodb";
 import * as dotenv from 'dotenv';
 import cors from "cors";
 
@@ -8,7 +9,7 @@ const app = express()
 const PORT = 8000;
 
 app.use(cors());
-app.use(express.json());
+
 
 
 //Mongo Connection
@@ -23,7 +24,7 @@ app.use(express.json());
 
  const client = await createConnection()
 
-
+ app.use(express.json());
 
 //   for starting the port
 app.get('/',(req,res)=>{
@@ -51,7 +52,8 @@ app.delete('/phones/:id',async(req,res)=>{
    res.send(phone);
 });
 
-//  for adding phones
+//  for adding phones 
+//  in postman give array and single obj
 app.post('/phones',async(req,res)=>{
     const newPhone = req.body;
     const result = await client
@@ -63,15 +65,32 @@ app.post('/phones',async(req,res)=>{
 
 //  for editing phones data
     // put= post and get 
+    //  in postman only single obj not within array
 app.put("/phones/:id", async (req,res)=>{
     const { id } = req.params;
     const updatePhones = req.body;
+    console.log(updatePhones);
     const output = await client
    .db("phone-catalog")
    .collection("phones")
    .updateOne({id : id}, {$set: updatePhones});
-   res.send(output); 
+    res.send(output); 
 });
+   
+    //  for editing phones
+    // need to use body-parser
+    // app.use(bodyParser.urlencoded({ extended: true }))
+    // app.use(bodyParser.json())
+    // app.put("/phones/:id", async (req,res)=>{
+    //     const _id = mongo.ObjectId(req.params.id);
+    //     const updatePhones = req.body;
+    //     console.log(updatePhones);
+    //     const output = await client
+    //    .db("phone-catalog")
+    //    .collection("phones")
+    //    .updateOne({id : _id}, {$set: updatePhones});
+    //     res.send(output); 
+    // });
 
 app.listen(PORT, ()=> 
 console.log("Server started on the PORT", PORT))
