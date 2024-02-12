@@ -43,22 +43,9 @@ router.put("/:id", async (req,res)=>{
    res.send(output); 
 });
   
-//   //delete using object id
-// router.delete("/phones/:id", async (req, res) => {
-//     const _id = mongo.ObjectId(req.params.id);
-//   const deletePhones = await deletePhoneId(_id, res);
-//   res.send(deletePhones);
-// });
+
 
 
    export const phonesRouter = router;
 
-// function deletePhoneId(_id, res) {
-//     return client
-//         .db("phone-catalog")
-//         .collection("phones")
-//         .deleteOne({ _id }, (err, result) => {
-//             if (err) throw err;
-//             res.send("Deleted Successfully");
-//         });
-// }
+

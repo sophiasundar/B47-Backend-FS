@@ -2,6 +2,7 @@ import express from "express";
 import { MongoClient } from "mongodb";
 import * as dotenv from 'dotenv';
 import { phonesRouter } from "./routes/phones.js";
+import { usersRouter } from "./routes/user.js"
 import cors from "cors";
 // import bodyParser from "body-parser";
 
@@ -37,7 +38,9 @@ app.get('/',(req,res)=>{
 
 app.use("/phones", phonesRouter);
 
+app.use("users", usersRouter);
 
 app.listen(PORT, ()=> 
-console.log("Server started on the PORT", PORT))
+console.log("Server started on the PORT", PORT)
+)
 
