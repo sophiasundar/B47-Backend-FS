@@ -3,12 +3,15 @@ import { MongoClient } from "mongodb";
 import * as dotenv from 'dotenv';
 import { phonesRouter } from "./routes/phones.js";
 import cors from "cors";
+// import bodyParser from "body-parser";
 
 dotenv.config();
 const app = express()
 const PORT = 8000;
 
 app.use(cors());
+
+// app.use(bodyParser.urlencoded({ extended: true }))
 
 
 
@@ -25,6 +28,7 @@ app.use(cors());
  export const client = await createConnection()
 
  app.use(express.json());
+//  app.use(bodyParser.json());
 
 //   for starting the port
 app.get('/',(req,res)=>{
