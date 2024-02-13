@@ -1,8 +1,9 @@
 import express from "express";
 import { MongoClient } from "mongodb";
 import * as dotenv from 'dotenv';
+import bcrypt from "bcrypt";
 import { phonesRouter } from "./routes/phones.js";
-import { usersRouter } from "./routes/user.js"
+import { usersRouter } from "./routes/routeUser.js"
 import cors from "cors";
 // import bodyParser from "body-parser";
 
@@ -38,7 +39,7 @@ app.get('/',(req,res)=>{
 
 app.use("/phones", phonesRouter);
 
-app.use("users", usersRouter);
+app.use("/users", usersRouter);
 
 app.listen(PORT, ()=> 
 console.log("Server started on the PORT", PORT)
