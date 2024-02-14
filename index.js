@@ -4,6 +4,7 @@ import * as dotenv from 'dotenv';
 import { phonesRouter } from "./routes/phones.js";
 import { usersRouter } from "./routes/routeUser.js"
 import cors from "cors";
+// cors => cross origin resource sharing
 // import bodyParser from "body-parser";
 
 dotenv.config();
