@@ -19,7 +19,8 @@ router.post('/signup',async(req,res)=>{
                return;
            }
             // validate if password matches
-           if(!/^(?=.*?[0-9])(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[_#!@%&$*]).{8,}$/g.test(password)){
+           if(!/^(?=.*?[0-9])(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[_#!@%&$*]).{8,}$/g.test(password
+            )){
                 res.status(400).send({message: "Password pattern does not match"});
                 return;
            }
@@ -30,7 +31,20 @@ router.post('/signup',async(req,res)=>{
 
  
 
+// login
+router.post('/login',async(req,res)=>{
+  const {username,password} = req.body;
+  console.log(username,password)
+   // validate if username is present
+     const userDataDB = await getUserByName(username);
+       console.log(userDataDB);
 
+       if(!userDataDB){
+        res.status(400).send({message: " Invalid Credentials "})
+        return;
+    }
+  res.send(userDataDB); 
+});
 
 
 

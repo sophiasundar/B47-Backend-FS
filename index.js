@@ -1,7 +1,6 @@
 import express from "express";
 import { MongoClient } from "mongodb";
 import * as dotenv from 'dotenv';
-import bcrypt from "bcrypt";
 import { phonesRouter } from "./routes/phones.js";
 import { usersRouter } from "./routes/routeUser.js"
 import cors from "cors";
