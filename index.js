@@ -7,12 +7,12 @@ import cors from "cors";
 // cors => cross origin resource sharing
 // import bodyParser from "body-parser";
 
-dotenv.config();
-const app = express()
+
+const app = express();
 const PORT = 8000;
 
 app.use(cors());
-
+dotenv.config();
 // app.use(bodyParser.urlencoded({ extended: true }))
 
 
