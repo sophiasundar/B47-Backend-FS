@@ -1,5 +1,5 @@
 import express from "express";
-import { genPassword, createUser, getUserByName } from "../helper/helperUser.js";
+import { genPassword, createUser, getUserByEmail } from "../helper/helperUser.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 const router = express.Router();
@@ -9,13 +9,13 @@ const router = express.Router();
 
 // signUp/register
 router.post('/signup',async(req,res)=>{
-    const {username,password} = req.body;
-    console.log(username,password)
-     // validate if username is present
-       const isUserExist = await getUserByName(username);
+    const {email,password} = req.body;
+    console.log(email,password)
+     // validate if email is present
+       const isUserExist = await getUserByEmail(email);
          console.log(isUserExist);
            if(isUserExist){
-               res.status(400).send({message: "username already exists"})
+               res.status(400).send({message: "email already exists"})
                return;
            }
             // validate if password matches
@@ -25,18 +25,18 @@ router.post('/signup',async(req,res)=>{
                 return;
            }
     const hashedPassword = await genPassword(password);
-    const result = createUser(username,hashedPassword);
-    res.send(result); 
+    const result = await createUser(email,hashedPassword);
+    res.status(200).send(result); 
  });
 
  
 
 // login
 router.post('/login',async(req,res)=>{
-  const {username,password} = req.body;
-  console.log(username,password)
-   // validate if username is present
-     const userFromDB = await getUserByName(username);
+  const {email,password} = req.body;
+  console.log(email,password)
+   // validate if email is present
+     const userFromDB = await getUserByEmail(email);
        console.log(userFromDB);
 
        if(!userFromDB){
@@ -44,6 +44,7 @@ router.post('/login',async(req,res)=>{
         return;
     }
 
+ 
     const passwordDb = userFromDB.password;
       const isPasswordMatch = await bcrypt.compare(password,passwordDb)
       
@@ -54,7 +55,7 @@ router.post('/login',async(req,res)=>{
 
     // generate token
          const token = jwt.sign({id:userFromDB._id},process.env.SECRET_KEY);
-           res.send({ message: "Succefully Logged In ", token:token }); 
+           res.send({ message: "Succefully Logged In ", token:token, roleId: userFromDB.roleId }); 
 });
 
 

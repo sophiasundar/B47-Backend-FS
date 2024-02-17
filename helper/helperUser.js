@@ -17,17 +17,17 @@ export async function genPassword(password){
   }
 
   // create user and validate password while posting itself (signup)
-  export async function createUser( username, hashedPassword ){
+  export async function createUser( email, hashedPassword ){
     return await client
     .db("phone-catalog")
     .collection("users")
-    .insertOne({ username: username, password: hashedPassword });
+    .insertOne({ email: email, password: hashedPassword });
   }
 
-  // read the username and match/validate username (signup)
-  export async function getUserByName( username ){
+  // read the email and match/validate email (signup)
+  export async function getUserByEmail( email ){
     return await client
     .db("phone-catalog")
     .collection("users")
-    .findOne({ username: username });
+    .findOne({ email: email });
   }
