@@ -18,7 +18,7 @@ router.post('/signup',async(req,res)=>{
                res.status(400).send({message: "email already exists"})
                return;
            }
-            // validate if password matches
+          //   // validate if password matches
           //  if(!/^(?=.*?[0-9])(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[_#!@%&$*]).{8,}$/g.test(password
           //   )){
           //       res.status(400).send({message: "Password pattern does not match"});
