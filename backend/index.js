@@ -1,8 +1,8 @@
 import express from "express";
 import { MongoClient } from "mongodb";
 import * as dotenv from 'dotenv';
-import { phonesRouter } from "./routes/phones.js";
-import { usersRouter } from "./routes/routeUser.js"
+import { phonesRouter } from "./backend/routes/phones.js";
+import { usersRouter } from "./backend/routes/routeUser.js"
 import cors from "cors";
 // cors => cross origin resource sharing
 // import bodyParser from "body-parser";

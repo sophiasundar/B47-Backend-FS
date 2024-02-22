@@ -1,6 +1,6 @@
 // authentication
 import bcrypt from "bcrypt";
-import { client } from "../index.js"
+import { client } from "../../index.js"
 // import { ObjectId } from "mongodb"; 
 
 
