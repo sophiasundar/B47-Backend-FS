@@ -1,36 +1,36 @@
 import express from "express";
-import { newCosmetics, getCos, getById, deleteById, putCosMen } from '../helper/helperCosmetics.js';
+import { newCosw, getCosW, getByIdWomen, deleteByIdWo, putCosWomen } from '../helper/helperCosWomen.js';
 const router = express.Router();
 
 router.post('/',async (req,res)=>{
     const newCos = req.body;
     console.log(newCos);
-    const result = await newCosmetics(newCos);
+    const result = await newCosw(newCos);
     res.send(result);
 })
 
 router.get('/', async(req,res)=>{
-     const allCos = await getCos();
+     const allCos = await getCosW();
      res.send(allCos);
 })
 
 router.get('/:id', async (req,res)=>{
     const { id } = req.params;
-    const getCosId = await getById(id);
+    const getCosId = await getByIdWomen(id);
     res.send(getCosId)
 })
 
 router.delete('/:id', async(req,res)=>{
     const { id } = req.params;
-    const delCos = await deleteById(id);
+    const delCos = await deleteByIdWo(id);
     res.send(delCos);
 })
 
 router.put('/:id', async(req,res)=>{
     const { id } = req.params;
-    const updateCosMen = req.body;
-    const result = await putCosMen(id, updateCosMen);
+    const updateCosWomen = req.body;
+    const result = await putCosWomen(id, updateCosWomen);
     res.send(result);
 })
 
-export const cosMenRouter = router;
+export const cosWomenRouter = router;

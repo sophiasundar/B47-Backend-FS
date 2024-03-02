@@ -2,6 +2,9 @@ import express from "express";
 import { MongoClient } from "mongodb";
 import * as dotenv from 'dotenv';
 import { laptopsRouter } from './routes/routeLaptop.js';
+import { phonesRouter } from './routes/routePhones.js';
+import { cosMenRouter } from './routes/routeCosmetics.js';
+import { cosWomenRouter } from './routes/routeCosWomen.js';
 import cors from "cors";
 
 
@@ -30,9 +33,13 @@ export const client = await createConnection()
     res.send('Hey! Hi, 🙋‍♀️👋🙌🏽🙏🏽');
 });
 
-
+// electronics
 app.use('/laptops', laptopsRouter);
+app.use('/phones', phonesRouter);
 
+// cosmetics
+app.use('/cosmen', cosMenRouter);
+app.use('/coswomen', cosWomenRouter);
 
 
 app.listen(PORT, ()=> 
