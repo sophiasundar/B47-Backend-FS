@@ -5,6 +5,8 @@ import { laptopsRouter } from './routes/routeLaptop.js';
 import { phonesRouter } from './routes/routePhones.js';
 import { cosMenRouter } from './routes/routeCosmetics.js';
 import { cosWomenRouter } from './routes/routeCosWomen.js';
+import { menRouter } from './routes/routeMen.js';
+import { womenRouter } from './routes/routeWomen.js';
 import cors from "cors";
 
 
@@ -40,6 +42,10 @@ app.use('/phones', phonesRouter);
 // cosmetics
 app.use('/cosmen', cosMenRouter);
 app.use('/coswomen', cosWomenRouter);
+
+// clothing
+app.use('/clothingmen', menRouter);
+app.use('/clothingwomen', womenRouter);
 
 
 app.listen(PORT, ()=> 
