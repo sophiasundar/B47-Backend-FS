@@ -1,5 +1,5 @@
 import express from "express";
-import { addLaptop, getLaptop, getLaptopId, deleteLapId, putLaps } from "../helper/helperLaptop.js"
+import { addLaptop, getLaptop, getLaptopId, deleteLapId, putLaps, getlaps } from "../helper/helperLaptop.js"
 const router = express.Router();
 
 //  for adding laps 
@@ -11,12 +11,39 @@ router.post('/',async(req,res)=>{
    res.send(result); 
  });
 
-
+ router.get('/', async(req,res)=>{
+  const alllaps = await getlaps();
+  res.send(alllaps);
+})
 
 //  for getting all lap's data 
-router.get('/' ,async(req,res)=>{
-    const laptop = await getLaptop()
-   res.send(laptop)
+router.get('/filter' ,async(req,res)=>{
+  const {name,price,brand} = req.query;
+  console.log(req.query,name);
+  const query = {};
+  if (name){
+         query.name = name;
+     } 
+     if (price){
+      query.price = price;
+    } 
+    if(brand){
+      query.brand = brand;
+  }else{
+    return res.status(400).send("Brand parameter is required.")
+  }
+  try{
+    const laptop = await getLaptop(query);
+       if(!laptop){
+        return res.status(404).send("Laptop Not Found")
+       }
+       res.send(laptop)
+  }catch (error){
+    console.error("Error fetching laptop:", error);
+    // res.status(500).send("Internal server error.")
+  }
+   
+   
 });
   
 //  for getting all lap's data by id
@@ -41,6 +68,8 @@ router.put('/:id', async(req,res)=>{
   const output = await putLaps(id, updateLaptops);
   res.send(output);
 });
+
+
 
 
 export const laptopsRouter = router;

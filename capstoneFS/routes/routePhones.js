@@ -1,5 +1,5 @@
 import express from "express";
-import { addPhones, getPhones, getPhonesId, deleteById, putPhones } from '../helper/helperPhones.js'
+import { addPhones, getPhones, getPhonesId, deleteById, putPhones, getphns } from '../helper/helperPhones.js'
 const router = express.Router();
 
 router.post('/',async(req,res)=>{
@@ -9,9 +9,43 @@ router.post('/',async(req,res)=>{
    res.send(result); 
  });
 
- router.get('/',async(req,res)=>{
-    const phones = await getPhones()
+ router.get('/', async(req,res)=>{
+  const allphones = await getphns();
+  res.send(allphones);
+})
+
+
+
+ router.get('/filter',async(req,res)=>{
+    const {name,price,brand} = req.query;
+//   console.log(req.query,name);
+  const query = {};
+  if (name){
+         query.name = name;
+     } 
+     if (price){
+      query.price = price;
+    } 
+    if(brand){
+        query.brand = brand;
+    }
+    // else{
+    //    return  res.status(400).send("Brand Paramater is required")
+    //   }
+
+      try{
+        const phonesQuery = req.query;
+        const phones = await getPhones(phonesQuery)
+        if(!phones.length){
+            return  res.status(404).send("Phones not found") 
+        }
         res.send(phones)
+      }catch{
+        console.error("Error fetching phone:", "error")
+        return res.status(500).send("Internal server error.")
+      }
+    
+        
  })
 
  router.get('/:id',async(req,res)=>{

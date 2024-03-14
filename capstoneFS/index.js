@@ -28,11 +28,52 @@ const MONGO_URL = process.env.mongo_url;
 
 export const client = await createConnection()
 
+  
+   const dbName = 'item_catalog';
+
+  async function searchCollection(query){
+   const client = new MongoClient(MONGO_URL);
+   const results = [];
+  try{ 
+   await client.connect();
+   const db =  client.db(dbName);
+
+   const collections = ['phones','laptop','cosmen','cosWomen','clothWomen','clothMn'];
+  
+     for (const collectionName of collections){
+          const collection = db.collection(collectionName);
+          const searchResult = await collection.find({ $text: { $search: query} }).toArray();
+           results.push(...searchResult);
+     }
+   return results;
+  }
+     catch(error){
+   throw error;
+  } finally {
+     await client.close();
+  }
+}
  
 
 
  app.get('/',(req,res)=>{
     res.send('Hey! Hi, 🙋‍♀️👋🙌🏽🙏🏽');
+});
+
+app.get('/search',async (req,res)=>{
+        const query = req.query.q;
+
+        try{
+
+         if (!query) {
+            return res.status(400).json({ error: 'Missing search query parameter.' });
+        }
+          const results = await searchCollection(query);
+           res.json(results);
+        }catch(error){
+           console.error('Error searching collections:', error);
+           res.status(500).json({error:'Internal server error'});
+        }
 });
 
 // electronics
@@ -46,6 +87,7 @@ app.use('/coswomen', cosWomenRouter);
 // clothing
 app.use('/clothingmen', menRouter);
 app.use('/clothingwomen', womenRouter);
+
 
 
 app.listen(PORT, ()=> 

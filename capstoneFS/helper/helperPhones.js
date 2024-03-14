@@ -9,11 +9,19 @@ export async function addPhones(newPhones){
     .insertMany(newPhones)
 }
 
-export async function getPhones(){
+export async function getphns(){
     return await client
     .db("item_catalog")
     .collection("phones")
     .find()
+    .toArray();
+}
+
+export async function getPhones(query){
+    return await client
+    .db("item_catalog")
+    .collection("phones")
+    .find(query)
     .toArray();
 }
 

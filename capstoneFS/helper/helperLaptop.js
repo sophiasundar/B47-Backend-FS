@@ -12,7 +12,15 @@ export async function  addLaptop(newLaptop) {
         .insertMany(newLaptop);
 }
 
-export async function getLaptop() {
+export async function getLaptop(query) {
+    return await client
+        .db("item_catalog")
+        .collection("laptop")
+        .find(query)
+        .toArray();
+}
+
+export async function getlaps() {
     return await client
         .db("item_catalog")
         .collection("laptop")
