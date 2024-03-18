@@ -1,5 +1,5 @@
 import express from "express";
-import { newCosw, getCosW, getByIdWomen, deleteByIdWo, putCosWomen } from '../helper/helperCosWomen.js';
+import { newCosw, getCosW, getByIdWomen, deleteByIdWo, putCosWomen, getCosWomen } from '../helper/helperCosWomen.js';
 const router = express.Router();
 
 router.post('/',async (req,res)=>{
@@ -12,6 +12,33 @@ router.post('/',async (req,res)=>{
 router.get('/', async(req,res)=>{
      const allCos = await getCosW();
      res.send(allCos);
+})
+
+router.get('/filter', async(req,res)=>{
+    const {price,brand} = req.query;
+    console.log(req.query,price);
+  
+    const query = {};
+       if (price && typeof price === 'number'){
+        query.price = { $gte: price};
+      }else if (price) {
+        console.warn("Invalid price format. Expected a number.");
+      }
+       
+      if(brand){
+        query.brand = brand;
+      }
+
+      try{
+        const allCosWn = await getCosWomen(query);
+         if(!allCosWn){
+            return res.status(404).send("Cosmetics for Women not found !")
+           }
+         res.send(allCosWn);
+      }catch (error){
+        console.error("Error fetching Cosmetics:", error);
+      }
+    
 })
 
 router.get('/:id', async (req,res)=>{

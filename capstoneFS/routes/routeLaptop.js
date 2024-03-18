@@ -18,29 +18,28 @@ router.post('/',async(req,res)=>{
 
 //  for getting all lap's data 
 router.get('/filter' ,async(req,res)=>{
-  const {name,price,brand} = req.query;
-  console.log(req.query,name);
+  const {price,brand} = req.query;
+  console.log(req.query,price);
+
   const query = {};
-  if (name){
-         query.name = name;
-     } 
-     if (price){
-      query.price = price;
-    } 
+     if (price && typeof price === 'number'){
+      query.price = { $gte: price};
+    }else if (price) {
+      console.warn("Invalid price format. Expected a number.");
+    }
+     
     if(brand){
       query.brand = brand;
-  }else{
-    return res.status(400).send("Brand parameter is required.")
-  }
+    }
+
   try{
     const laptop = await getLaptop(query);
        if(!laptop){
-        return res.status(404).send("Laptop Not Found")
+        return res.status(404).send("Laptop Not Found !")
        }
        res.send(laptop)
   }catch (error){
     console.error("Error fetching laptop:", error);
-    // res.status(500).send("Internal server error.")
   }
    
    

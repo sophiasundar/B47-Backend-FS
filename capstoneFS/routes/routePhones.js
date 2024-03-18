@@ -17,28 +17,25 @@ router.post('/',async(req,res)=>{
 
 
  router.get('/filter',async(req,res)=>{
-    const {name,price,brand} = req.query;
-//   console.log(req.query,name);
-  const query = {};
-  if (name){
-         query.name = name;
-     } 
-     if (price){
-      query.price = price;
-    } 
+    const {price,brand} = req.query;
+  console.log(req.query,price);
+  const query = {}; 
+     if (price && typeof price === 'number'){
+      query.price = { $gte: price};
+    } else if (price) {
+      console.warn("Invalid price format. Expected a number.");
+    }
+    
     if(brand){
         query.brand = brand;
     }
-    // else{
-    //    return  res.status(400).send("Brand Paramater is required")
-    //   }
 
       try{
-        const phonesQuery = req.query;
-        const phones = await getPhones(phonesQuery)
-        if(!phones.length){
-            return  res.status(404).send("Phones not found") 
-        }
+       
+        const phones = await getPhones(query);
+        if(!phones){
+          return res.status(404).send("Phones Not Found !")
+         }
         res.send(phones)
       }catch{
         console.error("Error fetching phone:", "error")

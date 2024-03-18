@@ -1,5 +1,5 @@
 import express from "express";
-import { newMn, getMn, getMnById, deleteMnById, putMn }  from '../helper/helperMen.js'
+import { newMn, getMn, getMnById, deleteMnById, putMn, getMnCloth }  from '../helper/helperMen.js'
 const router = express.Router();
 
 router.post('/',async (req,res)=>{
@@ -12,6 +12,33 @@ router.post('/',async (req,res)=>{
 router.get('/', async(req,res)=>{
      const allCloth = await getMn();
      res.send(allCloth);
+})
+
+router.get('/filter', async(req,res)=>{
+    const {price,brand} = req.query;
+    console.log(req.query,price);
+  
+    const query = {};
+       if (price && typeof price === 'number'){
+        query.price = { $gte: price};
+      }else if (price) {
+        console.warn("Invalid price format. Expected a number.");
+      }
+       
+      if(brand){
+        query.brand = brand;
+      }
+     
+      try{
+        const allCloth = await getMnCloth(query);
+          if(!allCloth){
+            return res.status(404).send("Clothing for Men not found !")
+           }
+        res.send(allCloth);
+      }catch (error){
+        console.error("Error fetching Clothing:", error);
+      }
+    
 })
 
 router.get('/:id', async (req,res)=>{

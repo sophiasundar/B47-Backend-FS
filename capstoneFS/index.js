@@ -7,6 +7,7 @@ import { cosMenRouter } from './routes/routeCosmetics.js';
 import { cosWomenRouter } from './routes/routeCosWomen.js';
 import { menRouter } from './routes/routeMen.js';
 import { womenRouter } from './routes/routeWomen.js';
+import { usersRouter } from './routes/routeUser.js';
 import cors from "cors";
 
 
@@ -28,7 +29,7 @@ const MONGO_URL = process.env.mongo_url;
 
 export const client = await createConnection()
 
-  
+   // search  
    const dbName = 'item_catalog';
 
   async function searchCollection(query){
@@ -37,6 +38,8 @@ export const client = await createConnection()
   try{ 
    await client.connect();
    const db =  client.db(dbName);
+   console.log(dbName);
+   
 
    const collections = ['phones','laptop','cosmen','cosWomen','clothWomen','clothMn'];
   
@@ -53,6 +56,12 @@ export const client = await createConnection()
      await client.close();
   }
 }
+
+// wishlist
+   const dbname = 'item_catalog';
+   const collectionName = "wistlists";
+
+   // async function addWishlist()
  
 
 
@@ -88,7 +97,7 @@ app.use('/coswomen', cosWomenRouter);
 app.use('/clothingmen', menRouter);
 app.use('/clothingwomen', womenRouter);
 
-
+app.use("/users", usersRouter);
 
 app.listen(PORT, ()=> 
 console.log("Server started on the PORT", PORT)

@@ -16,6 +16,14 @@ export async function getMn(){
     .toArray();
 }
 
+export async function getMnCloth(query){
+    return await client
+    .db("item_catalog") 
+    .collection("clothMn")
+    .find(query)
+    .toArray();
+}
+
 export async function getMnById(id){
     return await client
     .db("item_catalog")

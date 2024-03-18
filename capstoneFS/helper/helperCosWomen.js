@@ -16,6 +16,14 @@ export async function getCosW(){
     .toArray();
 }
 
+export async function getCosWomen(query){
+    return await client
+    .db("item_catalog") 
+    .collection("cosWomen")
+    .find(query)
+    .toArray();
+}
+
 export async function getByIdWomen(id){
     return await client
     .db("item_catalog")
