@@ -15,7 +15,8 @@ router.get('/', async(req,res)=>{
 })
 
 router.get('/filter', async(req,res)=>{
-    const {price,brand} = req.query;
+  let {price,brand} = req.query;
+  price = Number(price)
     console.log(req.query,price);
   
     const query = {};

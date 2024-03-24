@@ -57,15 +57,8 @@ export const client = await createConnection()
   }
 }
 
-// wishlist
-   const dbname = 'item_catalog';
-   const collectionName = "wistlists";
-
-   // async function addWishlist()
  
-
-
- app.get('/',(req,res)=>{
+app.get('/',(req,res)=>{
     res.send('Hey! Hi, 🙋‍♀️👋🙌🏽🙏🏽');
 });
 

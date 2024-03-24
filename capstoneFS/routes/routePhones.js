@@ -17,21 +17,23 @@ router.post('/',async(req,res)=>{
 
 
  router.get('/filter',async(req,res)=>{
-    const {price,brand} = req.query;
-  console.log(req.query,price);
+  let {minPrice,maxPrice,brand} = req.query;
+  minPrice = Number(minPrice);
+  maxPrice = Number(maxPrice)
+  console.log(minPrice,maxPrice);
+
   const query = {}; 
-     if (price && typeof price === 'number'){
-      query.price = { $gte: price};
+     if (minPrice && maxPrice){
+        query.price = { $lte: maxPrice , $gte: minPrice };
     } else if (price) {
       console.warn("Invalid price format. Expected a number.");
-    }
+    }  
     
-    if(brand){
+     if(brand){
         query.brand = brand;
     }
-
-      try{
-       
+    
+    try{
         const phones = await getPhones(query);
         if(!phones){
           return res.status(404).send("Phones Not Found !")
@@ -42,8 +44,7 @@ router.post('/',async(req,res)=>{
         return res.status(500).send("Internal server error.")
       }
     
-        
- })
+});
 
  router.get('/:id',async(req,res)=>{
      const {id} = req.params;

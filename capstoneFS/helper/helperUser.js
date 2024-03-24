@@ -28,3 +28,33 @@ export async function genPassword(password){
     .collection("users")
     .findOne({ email: email });
   }
+
+  export async function findById(userId) {
+    return await client
+        .db("item_catalog")
+        .collection("wistlists")
+        .find(userId)
+        .toArray();
+}
+  
+
+// export async function addProductToWishlist(userId, newProduct) {
+//   try {
+//     const database = client.db("item_catalog");
+//     const collection = database.collection("wistlists");
+ 
+//     const user = await collection.findOne({ _id: userId });
+//     if (!user) {
+//       throw new Error("User not found"); 
+//     }
+//     user.wishlist.push(newProduct);
+
+//   await collection.updateOne({ _id: userId }, { $set: { wishlist: user.wishlist } });
+
+//     console.log("Product added to wishlist");
+//   }   
+//   catch (err) {
+//     console.error(err);
+//     throw err; 
+//   }
+// }
