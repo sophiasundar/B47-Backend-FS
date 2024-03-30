@@ -18,10 +18,10 @@ app.use(cors());
 dotenv.config();
 app.use(express.json());
 
-const MONGO_URL = process.env.mongo_url;
+const mongo_url = process.env.mongo_url;
 
  async function createConnection(){
-    const client = new MongoClient(MONGO_URL);
+    const client = new MongoClient(mongo_url);
     await client.connect();  
     console.log("Mongodb is Connected");
     return client; 
