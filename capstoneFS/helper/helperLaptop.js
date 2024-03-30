@@ -6,7 +6,7 @@ export async function  addLaptop(newLaptop) {
     return await client
         .db("item_catalog")
         .collection("laptop")
-        .insertMany(newLaptop);
+        .insertOne(newLaptop);
 }
 
 export async function getlaps() {

@@ -5,7 +5,7 @@ export async function newCosmetics(newCos){
     return await client
     .db("item_catalog")
     .collection("cosmen")
-    .insertMany(newCos)
+    .insertOne(newCos)
 }
 
 export async function getCos(){

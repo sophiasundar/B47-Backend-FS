@@ -5,7 +5,7 @@ export async function newWn(newCloth){
     return await client
     .db("item_catalog")
     .collection("clothWomen")
-    .insertMany(newCloth)
+    .insertOne(newCloth)
 }
 
 export async function getWon(){

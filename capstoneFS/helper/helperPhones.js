@@ -6,7 +6,7 @@ export async function addPhones(newPhones){
     return await client
     .db("item_catalog")
     .collection("phones")
-    .insertMany(newPhones)
+    .insertOne(newPhones)
 }
 
 export async function getphns(){

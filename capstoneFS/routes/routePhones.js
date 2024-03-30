@@ -25,7 +25,7 @@ router.post('/',async(req,res)=>{
   const query = {}; 
      if (minPrice && maxPrice){
         query.price = { $lte: maxPrice , $gte: minPrice };
-    } else if (price) {
+    } else if (minPrice && maxPrice) {
       console.warn("Invalid price format. Expected a number.");
     }  
     
@@ -52,6 +52,7 @@ router.post('/',async(req,res)=>{
      res.send(phone);
  })
 
+
  router.delete('/:id', async (req,res)=>{
       const {id} = req.params;
       const delPhones = await deleteById(id);
@@ -66,5 +67,6 @@ router.post('/',async(req,res)=>{
     res.send(result);
 
  })
+
 
  export const phonesRouter = router;
