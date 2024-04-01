@@ -18,7 +18,7 @@ app.use(cors());
 dotenv.config();
 app.use(express.json());
 
-const MONGO_URL = process.env.mongo_url;
+const MONGO_URL = process.env.MONGO_URL;
 
  async function createConnection(){
     const client = new MongoClient(MONGO_URL);
