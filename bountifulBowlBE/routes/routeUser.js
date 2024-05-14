@@ -2,7 +2,7 @@ import express from "express";
 import { genPassword, createUser, getUserEmail } from '../helper/helperUser.js';
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-// import { verifyToken } from "../middleware/auth.js";
+
 const router = express.Router();
 
 
@@ -53,30 +53,12 @@ const router = express.Router();
                 res.send({ message: "Succefully Logged In", user:userFromDB,  token:token, roleId: userFromDB.roleId  });
     });
 
-    //  to authorize the user so we have to verify the token
-
-    async function authorize(allowedRoles) {
-      return async (req, res, next) => {
-        const user = req.user; // Assuming user information is in the request
     
-        if (!user || !allowedRoles.includes(user.role)) {
-          return res.status(403).json({ message: "Unauthorized: Insufficient permissions" });
-        } 
-         
-        next(); // Authorized, proceed to the route handler
-      };
-    }
        
-    // create read delete update by cater manager
-  //  router.get("/userauthor", verifyToken, authorize(['banquet-manager']), async (req,res)=>{
-      
-     
-  //   });
+  
 
-  //   router.get("/foodlist", verifyToken, authorize(['banquet-manager','orphanage-manager']), async (req,res)=>{
-      
-     
-  //   });
+
+   
 
     
  

@@ -1,9 +1,15 @@
 import jwt from "jsonwebtoken";
 
 
-export const verifyToken = (req,res,next)=>{
+export const verifyToken = (allowedRoles) =>{
+      return (req,res,next)=>{
     const headers = req.headers[`authorization`]
     console.log(headers);
+     
+    if(!headers || !headers.startsWith('Bearer ')){
+        return res.status(401).json({ message: 'Unauthorized: Missing or malformed access token' })
+    }
+
     const token = headers.split(' ')[1];
 
     if(!token){
@@ -13,21 +19,19 @@ export const verifyToken = (req,res,next)=>{
            if(err){
             return res.status(400).json({message: "Invalid Token"})
            }
+
+        // Role-based authorization check
+          if(!allowedRoles.includes(user.role)){
+              return res.status(403).json({ message: 'Forbidden: User not authorized for this operation'});
+          }
            console.log(user.id);
+           req.user = user;
            req.id =  user.id;
+           next();
      });
 
-     next();
+    };
  };
 
 
-// export const auth =(req,res,next) =>{
-//     try{
-//         const token = req.header("x-auth-token");
-//         console.log(token);
-//         jwt.verify(token,process.env.SECRET_KEY);
-//         next();
-// }catch(err){
-//     res.send({ error: err.message })
-// }
-// };
+

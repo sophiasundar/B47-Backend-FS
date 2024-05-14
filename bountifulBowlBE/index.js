@@ -3,7 +3,7 @@ import { MongoClient } from "mongodb";
 import * as dotenv from 'dotenv';
 import cors from "cors";
 import { userRouter } from "./routes/routeUser.js";
-
+import { foodRouter } from "./routes/routeFood.js";
 
 const app = express();
 const PORT = 8000;
@@ -29,6 +29,9 @@ const MONGO_URL = process.env.MONGO_URL;
 
      //user
      app.use("/users", userRouter);
+
+     //foodlist
+     app.use('/crud', foodRouter);
      
 
  app.listen(PORT, ()=> 
