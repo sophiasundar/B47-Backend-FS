@@ -24,9 +24,9 @@ export const verifyToken = (allowedRoles) =>{
           if(!allowedRoles.includes(user.role)){
               return res.status(403).json({ message: 'Forbidden: User not authorized for this operation'});
           }
-           console.log(user.id);
+        //    console.log(user.id);
            req.user = user;
-           req.id =  user.id;
+        //    req.id =  user.id;
            next();
      });
 

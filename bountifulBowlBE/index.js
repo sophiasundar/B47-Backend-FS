@@ -4,6 +4,9 @@ import * as dotenv from 'dotenv';
 import cors from "cors";
 import { userRouter } from "./routes/routeUser.js";
 import { foodRouter } from "./routes/routeFood.js";
+import { OrphManagerRouter } from "./routes/routeOrphanInfo.js";
+
+
 
 const app = express();
 const PORT = 8000;
@@ -23,6 +26,9 @@ const MONGO_URL = process.env.MONGO_URL;
 
  export const client = await createConnection()
 
+
+   // nodemail
+
       app.get('/',(req,res)=>{
          res.send('Hey! Hi, 🙋‍♀️👋🙌🏽🙏🏽');
       });
@@ -32,6 +38,9 @@ const MONGO_URL = process.env.MONGO_URL;
 
      //foodlist
      app.use('/crud', foodRouter);
+
+    //Orph Info
+    app.use('/orphinfo',OrphManagerRouter);
      
 
  app.listen(PORT, ()=> 

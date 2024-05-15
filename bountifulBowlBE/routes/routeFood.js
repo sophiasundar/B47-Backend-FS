@@ -1,6 +1,6 @@
 import { verifyToken } from "../middleware/auth.js";  
 import express from "express";
-import { addFoodList, getFoods, getFoodId, deleteById, putFood } from '../helper/helperFood.js'
+import { addFoodList, getFoods, getFoodId, deleteById, putFood } from '../helper/helperFood.js';
 const router = express.Router();
 
     // create read delete update by cater manager
@@ -15,30 +15,42 @@ const router = express.Router();
     });
 
 
-     // read
+     // read all food
     router.get("/foodlist", verifyToken(['banquet-manager','orphanage-manager']), async (req,res)=>{
           const fullfood = await getFoods();
           res.send(fullfood);
     });
 
 
-    //  // edit
-    //  router.put("/foodlist", verifyToken(['banquet-manager']), async (req,res)=>{
-          
-     
-    //  });
+    // read food by ID
+    router.get("/foodlist/:id", verifyToken(['banquet-manager','orphanage-manager']), async (req,res)=>{
+      const {id} = req.params;
+      const food = await getFoodId(id);
+      res.send(food);
+});
 
-    //   // delete
-    // router.delete("/foodlist", verifyToken(['banquet-manager']), async (req,res)=>{
-          
+     // edit
+     router.put("/foodlist/:id", verifyToken(['banquet-manager']), async (req,res)=>{
+          const {id} = req.params;
+          const updateFood = req.body;
+          console.log(updateFood);
+          const result = await putFood(id, updateFood);
+          res.send(result);
      
-    // });
+     });
+
+     // delete
+    router.delete("/foodlist/:id", verifyToken(['banquet-manager']), async (req,res)=>{
+          const {id} = req.params;
+          const delFood = await deleteById(id);
+          res.send(delFood);
+        });
 
    
-  //  router.get("/agree", verifyToken(['orphanage-manager']), async (req,res)=>{
+//    router.get("/agree", verifyToken(['orphanage-manager']), async (req,res)=>{
             
      
-  //   });
+//     });
 
 
   export const foodRouter = router;
