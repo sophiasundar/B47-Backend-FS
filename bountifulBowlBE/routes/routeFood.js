@@ -1,6 +1,7 @@
 import { verifyToken } from "../middleware/auth.js";  
 import express from "express";
 import { addFoodList, getFoods, getFoodId, deleteById, putFood } from '../helper/helperFood.js';
+
 const router = express.Router();
 
     // create read delete update by cater manager
@@ -39,18 +40,15 @@ const router = express.Router();
      
      });
 
-     // delete
-    router.delete("/foodlist/:id", verifyToken(['banquet-manager']), async (req,res)=>{
+    // delete
+      router.delete("/foodlist/:id", verifyToken(['banquet-manager']), async (req,res)=>{
           const {id} = req.params;
           const delFood = await deleteById(id);
           res.send(delFood);
         });
 
-   
-//    router.get("/agree", verifyToken(['orphanage-manager']), async (req,res)=>{
-            
-     
-//     });
+    
+
 
 
   export const foodRouter = router;
