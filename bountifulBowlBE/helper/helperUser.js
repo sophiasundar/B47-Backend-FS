@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import { client } from "../index.js"
-import { ObjectId } from "mongodb";
+// import { ObjectId } from "mongodb";
 
 
 // for generating the password 
@@ -30,18 +30,5 @@ export async function genPassword(password){
     }
 
     
-// authorization
-    
 
-
-    // export async function getById( id ){
-    //   const user = await client
-    //     .db("bountiful")
-    //     .collection("users")
-    //     .findOne({_id: new ObjectId(id)})
-    //    if (user){
-    //       delete user.password;
-    //    }
-    //     return user;
-    // }
 
