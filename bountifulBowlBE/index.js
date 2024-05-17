@@ -8,7 +8,7 @@ import { OrphManagerRouter } from "./routes/routeOrphanInfo.js";
 import { emailRouter } from "./routes/routeEmail.js";
 import nodemailer from 'nodemailer';
 import { ObjectId } from "mongodb";
-import fs from 'fs';
+
 
 const app = express();
 const PORT = 8000;
@@ -57,13 +57,11 @@ export async function sendEmail(banquetDetailsId, orphanageManagerId){
             throw new Error('Orphanage Information not found');
           }
              
-        await sendEmail(banquetDetails, orphanageInfo);
+       
 
         // email service
         const transporter = nodemailer.createTransport({
-           host: 'smtp.gmail.com',
-           port: 587,
-           secure: false,
+          service:"gmail",
            auth: {
             user: process.env.EMAIL_USER,
             pass: process.env.EMAIL_PASSWORD
@@ -74,8 +72,34 @@ export async function sendEmail(banquetDetailsId, orphanageManagerId){
              from: orphanageInfo.email,
              to: banquetDetails.email,
              subject: 'Orphanage Booking Confirmation',
-             html: fs.readFileSync('mail.html', 'utf8'),
-          };
+             html: `<h1>Food Takein Confirmation by Orphanage Management</h1>
+
+             <p>Dear ${banquetDetails.name}, </p>
+             <p>This email confirms that ${orphanageInfo.Orphanagename} orphanage has agreed to Takein the food.</p>
+      
+             <p><b>Orphanage Details: </b></p>
+             
+             <ul>
+              <li>Name: ${orphanageInfo.name}</li>
+              <li>Orphanage Name: ${orphanageInfo.Orphanagename}</li>
+              <li>Address: ${orphanageInfo.address}</li>
+              <li>email: ${orphanageInfo.email} </li>
+             </ul>
+      
+             <p><b>Banquet Details:</b></p>
+             <ul>
+              <li>Name: ${banquetDetails.name} </li>
+              <li>Banquet Hall: ${banquetDetails.hallname}</li>
+              <li>Address: ${banquetDetails.address} </li>
+              <li>Food TakeIn Date: ${banquetDetails.date} </li>
+              <li>Food TakeIn Time: ${banquetDetails.time}</li>
+             </ul>
+             <p><b>Thanks and Regards, </b></p>
+                   <p>${orphanageInfo.name}<p/>
+                <p>${orphanageInfo.Orphanagename}</p>
+
+             `
+          }
 
           await transporter.sendMail(mailOptions);
           console.log('Email sent successfully!')
