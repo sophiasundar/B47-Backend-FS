@@ -14,7 +14,7 @@ const router = express.Router();
     });
 
       // read
-      router.get("/", verifyToken(['banquet-manager','orphanage-manager']), async (req,res)=>{
+      router.get("/", async (req,res)=>{
         const allInfo = await getOrphManagers();
         res.send(allInfo);
   });
