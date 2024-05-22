@@ -1,6 +1,6 @@
 import { verifyToken } from "../middleware/auth.js";  
 import express from "express";
-import { addOrphManager, getOrphManagers } from '../helper/helperOrphanInfo.js';
+import { addOrphManager, getOrphManagers, getOrphId } from '../helper/helperOrphanInfo.js';
 
 const router = express.Router();
 
