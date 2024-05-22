@@ -41,7 +41,7 @@ const router = express.Router();
      });
 
     // delete
-      router.delete("/foodlist/:id", async (req,res)=>{
+      router.delete("/foodlist/:id", verifyToken(['banquet-manager']), async (req,res)=>{
           const {id} = req.params;
           const delFood = await deleteById(id);
           res.send(delFood);
