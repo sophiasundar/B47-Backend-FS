@@ -19,6 +19,12 @@ const router = express.Router();
         res.send(allInfo);
   });
 
+      router.get("/:id", async (req,res)=>{
+        const {id} = req.params;
+        const orph = await getOrphId(id);
+        res.send(orph);
+    });
+
 
 
 

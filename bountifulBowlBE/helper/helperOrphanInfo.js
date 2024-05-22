@@ -1,4 +1,4 @@
-// import { ObjectId } from "mongodb";
+import { ObjectId } from "mongodb";
 import { client } from "../index.js";
 
 export async function addOrphManager(newInfo){
@@ -14,4 +14,11 @@ export async function getOrphManagers(){
     .collection("orphanageInfo")
     .find()
     .toArray();
+}
+
+export async function getOrphId(id){
+    return await client
+    .db("bountiful")
+    .collection("orphanageInfo")
+    .findOne({_id : new ObjectId(id)});
 }
