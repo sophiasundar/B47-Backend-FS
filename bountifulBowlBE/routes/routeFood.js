@@ -23,8 +23,8 @@ const router = express.Router();
     });
 
 
-    // read food by ID
-    router.get("/foodlist/:id", verifyToken(['banquet-manager','orphanage-manager']), async (req,res)=>{
+    // read food by ID verifyToken(['banquet-manager','orphanage-manager'])
+    router.get("/foodlist/:id" , async (req,res)=>{
       const {id} = req.params;
       const food = await getFoodId(id);
       res.send(food);
