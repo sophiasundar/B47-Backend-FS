@@ -15,7 +15,7 @@ export const verifyToken = (allowedRoles) =>{
     if(!token){
         res.status(404).json({message:"No Token Found"})
     }
-     jwt.verify(String(token), process.env.SECRET_KEY, (err,user)=>{
+     jwt.verify(token, process.env.SECRET_KEY, (err,user)=>{
            if(err){
             return res.status(400).json({message: "Invalid Token"})
            }
