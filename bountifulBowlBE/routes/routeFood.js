@@ -7,7 +7,7 @@ const router = express.Router();
     // create read delete update by cater manager
 
     // create 
-    router.post("/foodlist", verifyToken(['banquet-manager']), async (req,res)=>{
+    router.post("/foodlist", async (req,res)=>{
         const newfoodList = req.body;
         console.log(newfoodList);
         const result = await addFoodList(newfoodList);
@@ -41,7 +41,7 @@ const router = express.Router();
      });
 
     // delete
-      router.delete("/foodlist/:id", async (req,res)=>{
+      router.delete("/foodlist/:id", verifyToken(['banquet-manager']), async (req,res)=>{
           const {id} = req.params;
           const delFood = await deleteById(id);
           res.send(delFood);
