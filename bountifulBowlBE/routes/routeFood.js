@@ -17,7 +17,7 @@ const router = express.Router();
 
 
      // read all food
-    router.get("/foodlist", async (req,res)=>{
+    router.get("/foodlist",verifyToken(['banquet-manager']), async (req,res)=>{
           const fullfood = await getFoods();
           res.send(fullfood);
     });
