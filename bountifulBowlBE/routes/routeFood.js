@@ -30,8 +30,8 @@ const router = express.Router();
       res.send(food);
 });
 
-     // edit
-     router.put("/foodlist/:id", verifyToken(['banquet-manager']), async (req,res)=>{
+     // edit  verifyToken(['banquet-manager']),
+     router.put("/foodlist/:id", async (req,res)=>{
           const {id} = req.params;
           const updateFood = req.body;
           console.log(updateFood);
