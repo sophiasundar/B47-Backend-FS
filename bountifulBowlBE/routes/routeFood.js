@@ -17,7 +17,7 @@ const router = express.Router();
 
 
      // read all food
-    router.get("/foodlist",verifyToken(['banquet-manager']), async (req,res)=>{
+    router.get("/foodlist", async (req,res)=>{
           const fullfood = await getFoods();
           res.send(fullfood);
     });
@@ -40,8 +40,8 @@ const router = express.Router();
      
      });
 
-    // delete
-      router.delete("/foodlist/:id", verifyToken(['banquet-manager']), async (req,res)=>{
+    // delete verifyToken(['banquet-manager']),
+      router.delete("/foodlist/:id",  async (req,res)=>{
           const {id} = req.params;
           const delFood = await deleteById(id);
           res.send(delFood);
