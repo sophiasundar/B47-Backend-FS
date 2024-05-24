@@ -14,8 +14,9 @@ router.post("/", verifyToken(['orphanage-manager']), async (req,res)=>{
        res.status(500).json({ message: "Error sending email" })
    }
    
-     
 });
+
+
 
 
 export const emailRouter = router;
