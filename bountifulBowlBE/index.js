@@ -30,17 +30,17 @@ const MONGO_URL = process.env.MONGO_URL;
 
 
  const dbName = 'bountiful';
-export async function sendEmail(banquetDetailsId, orphanageManagerId){
+export async function sendEmail(name, orphanagename, email, address, banquetDetailsId){
   const client = new MongoClient(MONGO_URL);
   
   try{
            await client.connect();
            const db = client.db(dbName);
-          //  console.log(dbName);
+           console.log(dbName);
         
 
         const banDetailsCollect = db.collection('food');
-        const orphInfoCollect = db.collection('orphanageInfo')
+      //   const orphInfoCollect = db.collection('orphanageInfo')
         
           
         const banquetDetails = await banDetailsCollect.findOne({ _id: new ObjectId(banquetDetailsId)})
@@ -50,12 +50,12 @@ export async function sendEmail(banquetDetailsId, orphanageManagerId){
             throw new Error('Banquet details not found');
           }
 
-          const orphanageInfo = await orphInfoCollect.findOne({ _id: new ObjectId(orphanageManagerId)})
-          console.log(typeof(orphanageManagerId))
-          console.log(orphanageManagerId)
-          if (!orphanageInfo){
-            throw new Error('Orphanage Information not found');
-          }
+         //  const orphanageInfo = await orphInfoCollect.findOne({ _id: new ObjectId(orphanageManagerId)})
+         //  console.log(typeof(orphanageManagerId))
+         //  console.log(orphanageManagerId)
+         //  if (!orphanageInfo){
+         //    throw new Error('Orphanage Information not found');
+         //  }
              
        
 
@@ -69,21 +69,21 @@ export async function sendEmail(banquetDetailsId, orphanageManagerId){
           });
 
           const mailOptions = {
-             from: orphanageInfo.email,
+             from: `${email}`,
              to: banquetDetails.email,
              subject: 'Orphanage Booking Confirmation',
              html: `<h1>Food Takein Confirmation by Orphanage Management</h1>
 
              <p>Dear ${banquetDetails.name}, </p>
-             <p>This email confirms that ${orphanageInfo.Orphanagename} orphanage has agreed to Takein the food.</p>
+             <p>This email confirms that ${name} orphanage has agreed to Takein the food.</p>
       
              <p><b>Orphanage Details: </b></p>
              
              <ul>
-              <li>Name: ${orphanageInfo.name}</li>
-              <li>Orphanage Name: ${orphanageInfo.Orphanagename}</li>
-              <li>Address: ${orphanageInfo.address}</li>
-              <li>email: ${orphanageInfo.email} </li>
+              <li>Name: ${name}</li>
+              <li>Orphanage Name: ${orphanagename}</li>
+              <li>Address: ${address}</li>
+              <li>email: ${email} </li>
              </ul>
       
              <p><b>Banquet Details:</b></p>
@@ -95,8 +95,8 @@ export async function sendEmail(banquetDetailsId, orphanageManagerId){
               <li>Food TakeIn Time: ${banquetDetails.time}</li>
              </ul>
              <p><b>Thanks and Regards, </b></p>
-                   <p>${orphanageInfo.name}<p/>
-                <p>${orphanageInfo.Orphanagename}</p>
+                   <p>${name}<p/>
+                <p>${orphanagename}</p>
 
              `
           }
@@ -128,7 +128,7 @@ export async function sendEmail(banquetDetailsId, orphanageManagerId){
      app.use('/orphinfo',OrphManagerRouter);
      
      //email
-     app.use('/agree',emailRouter);  
+     app.use('/sendemail',emailRouter);  
 
 
  app.listen(PORT, ()=> 

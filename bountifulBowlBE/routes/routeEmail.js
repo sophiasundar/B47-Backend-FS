@@ -1,13 +1,18 @@
 import { sendEmail } from '../index.js';
 import express from 'express';
-import { verifyToken } from "../middleware/auth.js";  
+// import { verifyToken } from "../middleware/auth.js";  
 const router = express.Router();
 
-//agree logic     
-router.post("/", verifyToken(['orphanage-manager']), async (req,res)=>{
+
+
+    
+   // verifyToken(['orphanage-manager']),
+router.post("/",  async (req,res)=>{
+
+   const { name, orphanagename, email, address, banquetDetailsId } = req.body;
+
    try{
-      const { banquetDetailsId, orphanageManagerId } = req.body;
-      await sendEmail(banquetDetailsId, orphanageManagerId );
+      await sendEmail( name, orphanagename, email, address, banquetDetailsId );
       res.json({ message: 'Email sent successfully! '});
    }catch (error){
        console.log(error);
