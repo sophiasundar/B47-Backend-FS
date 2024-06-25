@@ -29,36 +29,27 @@ const MONGO_URL = process.env.MONGO_URL;
  export const client = await createConnection()
 
 
- const dbName = 'bountiful';
-export async function sendEmail(name, orphanagename, email, address, banquetDetailsId){
+//  const dbName = 'bountiful';
+export async function sendEmail(name, orphanagename, email, address, banquetname, banmanagername, banquetemail){
   const client = new MongoClient(MONGO_URL);
   
   try{
            await client.connect();
-           const db = client.db(dbName);
-           console.log(dbName);
+         //   const db = client.db(dbName);
+         //   console.log(dbName);
         
 
-        const banDetailsCollect = db.collection('food');
-      //   const orphInfoCollect = db.collection('orphanageInfo')
-        
-          
-        const banquetDetails = await banDetailsCollect.findOne({ _id: new ObjectId(banquetDetailsId)})
-        console.log(typeof(banquetDetailsId))
-        console.log(banquetDetailsId)
-          if (!banquetDetails){
-            throw new Error('Banquet details not found');
-          }
-
-         //  const orphanageInfo = await orphInfoCollect.findOne({ _id: new ObjectId(orphanageManagerId)})
-         //  console.log(typeof(orphanageManagerId))
-         //  console.log(orphanageManagerId)
-         //  if (!orphanageInfo){
-         //    throw new Error('Orphanage Information not found');
-         //  }
+      //   const banDetailsCollect = db.collection('food');
+   
+             
+      //   const banquetDetails = await banDetailsCollect.findOne({ _id: new ObjectId(banquetDetailsId)})
+      //   console.log(typeof(banquetDetailsId))
+      //   console.log(banquetDetailsId)
+      //     if (!banquetDetails){
+      //       throw new Error('Banquet details not found');
+      //     }
              
        
-
         // email service
         const transporter = nodemailer.createTransport({
           service:"gmail",
@@ -70,11 +61,11 @@ export async function sendEmail(name, orphanagename, email, address, banquetDeta
 
           const mailOptions = {
              from: `${email}`,
-             to: banquetDetails.email,
+             to: `${banquetemail}`,
              subject: 'Orphanage Booking Confirmation',
              html: `<h1>Food Takein Confirmation by Orphanage Management</h1>
 
-             <p>Dear ${banquetDetails.name}, </p>
+             <p>Dear ${banmanagername}, </p>
              <p>This email confirms that ${name} orphanage has agreed to Takein the food.</p>
       
              <p><b>Orphanage Details: </b></p>
@@ -88,11 +79,8 @@ export async function sendEmail(name, orphanagename, email, address, banquetDeta
       
              <p><b>Banquet Details:</b></p>
              <ul>
-              <li>Name: ${banquetDetails.name} </li>
-              <li>Banquet Hall: ${banquetDetails.hallname}</li>
-              <li>Address: ${banquetDetails.address} </li>
-              <li>Food TakeIn Date: ${banquetDetails.date} </li>
-              <li>Food TakeIn Time: ${banquetDetails.time}</li>
+              <li>Name: ${banmanagername} </li>
+              <li>Banquet Hall: ${banquetname}</li>
              </ul>
              <p><b>Thanks and Regards, </b></p>
                    <p>${name}<p/>

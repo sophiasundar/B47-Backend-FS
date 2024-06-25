@@ -9,10 +9,10 @@ const router = express.Router();
    // verifyToken(['orphanage-manager']),
 router.post("/",  async (req,res)=>{
 
-   const { name, orphanagename, email, address, banquetDetailsId } = req.body;
+   const { name, orphanagename, email, address, banquetname, banmanagername, banquetemail } = req.body;
 
    try{
-      await sendEmail( name, orphanagename, email, address, banquetDetailsId );
+      await sendEmail( name, orphanagename, email, address, banquetname, banmanagername, banquetemail );
       res.json({ message: 'Email sent successfully! '});
    }catch (error){
        console.log(error);
@@ -20,6 +20,7 @@ router.post("/",  async (req,res)=>{
    }
    
 });
+
 
 
 
