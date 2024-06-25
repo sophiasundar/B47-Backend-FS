@@ -81,6 +81,7 @@ export async function sendEmail(name, orphanagename, email, address, banquetname
              <ul>
               <li>Name: ${banmanagername} </li>
               <li>Banquet Hall: ${banquetname}</li>
+              <li>Banquet Manager Email: ${banquetemail}</li>
              </ul>
              <p><b>Thanks and Regards, </b></p>
                    <p>${name}<p/>
