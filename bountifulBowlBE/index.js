@@ -85,7 +85,7 @@ const MONGO_URL = process.env.MONGO_URL;
          }
       });
 
-      console.log("Message sent: %s", info.messageId)
+      
 
 };
 
