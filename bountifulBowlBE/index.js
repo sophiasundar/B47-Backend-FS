@@ -75,12 +75,12 @@ const MONGO_URL = process.env.MONGO_URL;
          `
       };
 
-    const info = transporter.sendMail(mailOptions, function(error){
+      const info = transporter.sendMail(mailOptions, function(error){
          if(error){
             console.log(error)
            
          }else{
-            console.log("Email sent successfully")
+            console.log("Email sent successfully. Message ID:", info.messageId)
            
          }
       });
