@@ -29,22 +29,12 @@ const MONGO_URL = process.env.MONGO_URL;
  export const client = await createConnection()
 
 
-//   const dbName = 'bountiful';
   async function sendEmail(name, orphanagename, email, address, banquetname, banmanagername, banquetemails){
     
       const client = new MongoClient(MONGO_URL);
       await client.connect();
    
-      // const db = client.db(dbName);
-      // const banDetailsCollect = db.collection('food');
-
-      // const banquetDetails = await banDetailsCollect.findOne({ _id: new ObjectId(banquetDetailsId)})
-      // console.log(typeof(banquetDetailsId))
-      // console.log(banquetDetailsId)
-      //   if (!banquetDetails){
-      //     throw new Error('Banquet details not found');
-      //   }
-
+      
          const transporter = nodemailer.createTransport({
             service:"gmail",
              auth: {
@@ -85,7 +75,7 @@ const MONGO_URL = process.env.MONGO_URL;
          `
       };
 
-      transporter.sendMail(mailOptions, function(error){
+    const info = transporter.sendMail(mailOptions, function(error){
          if(error){
             console.log(error)
            
@@ -95,7 +85,7 @@ const MONGO_URL = process.env.MONGO_URL;
          }
       });
 
-   
+      console.log("Message sent: %s", info.messageId)
 
 };
 
