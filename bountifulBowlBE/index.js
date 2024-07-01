@@ -43,8 +43,7 @@ const MONGO_URL = process.env.MONGO_URL;
              }
             });
       
-      console.log(process.env.EMAIL_USER, typeof(process.env.EMAIL_USER));
-      console.log(process.env.EMAIL_PASSWORD, typeof(process.env.EMAIL_PASSWORD));
+      
          const mailOptions = {
          from: `${email}`,
          to: `${banquetemails}`,
