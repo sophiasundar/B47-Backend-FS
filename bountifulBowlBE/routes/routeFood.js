@@ -7,7 +7,7 @@ const router = express.Router();
     // create read delete update by cater manager
 
     // create 
-    router.post("/foodlist", async (req,res)=>{
+    router.post("/foodlist", verifyToken(['Banquet-Manager']), async (req,res)=>{
         const newfoodList = req.body;
         console.log(newfoodList);
         const result = await addFoodList(newfoodList);
@@ -17,21 +17,21 @@ const router = express.Router();
 
 
      // read all food
-    router.get("/foodlist", async (req,res)=>{
+    router.get("/foodlist", verifyToken(['Banquet-Manager','orphanage-manager']), async (req,res)=>{
           const fullfood = await getFoods();
           res.send(fullfood);
     });
 
 
-    // read food by ID verifyToken(['banquet-manager','orphanage-manager'])
-    router.get("/foodlist/:id" , async (req,res)=>{
+    // read food by ID verifyToken(['Banquet-Manager','orphanage-manager'])
+    router.get("/foodlist/:id" , verifyToken(['Banquet-Manager','orphanage-manager']), async (req,res)=>{
       const {id} = req.params;
       const food = await getFoodId(id);
       res.send(food);
 });
 
-     // edit  verifyToken(['banquet-manager']),
-     router.put("/foodlist/:id", async (req,res)=>{
+     // edit  
+     router.put("/foodlist/:id", verifyToken(['Banquet-Manager']), async (req,res)=>{
           const {id} = req.params;
           const updateFood = req.body;
           console.log(updateFood);
@@ -40,8 +40,8 @@ const router = express.Router();
      
      });
 
-    // delete verifyToken(['banquet-manager']),
-      router.delete("/foodlist/:id",  async (req,res)=>{
+    // delete 
+      router.delete("/foodlist/:id",  verifyToken(['Banquet-Manager']), async (req,res)=>{
           const {id} = req.params;
           const delFood = await deleteById(id);
           res.send(delFood);

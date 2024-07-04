@@ -5,13 +5,12 @@ import cors from "cors";
 import { userRouter } from "./routes/routeUser.js";
 import { foodRouter } from "./routes/routeFood.js";
 import { OrphManagerRouter } from "./routes/routeOrphanInfo.js";
-import { emailRouter } from "./routes/routeEmail.js";
 import nodemailer from 'nodemailer';
 
 
 
 const app = express();
-const PORT = 8000;
+const PORT = 8000; 
 
 app.use(cors());
 dotenv.config();
@@ -120,8 +119,7 @@ const MONGO_URL = process.env.MONGO_URL;
      //Orph Info
      app.use('/orphinfo',OrphManagerRouter);
      
-   //   email banquet
-     app.use('/banquet', emailRouter)
+  
 
  app.listen(PORT, ()=> 
     console.log("Server started on the PORT", PORT)
