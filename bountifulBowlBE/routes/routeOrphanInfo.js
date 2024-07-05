@@ -14,12 +14,12 @@ const router = express.Router();
     });
 
       // read
-      router.get("/", verifyToken(['Banquet-Manager','orphanage-manager']), async (req,res)=>{
+      router.get("/",  async (req,res)=>{
         const allInfo = await getOrphManagers();
         res.send(allInfo);
   });
 
-      router.get("/:id", verifyToken(['Banquet-Manager','orphanage-manager']), async (req,res)=>{
+      router.get("/:id", async (req,res)=>{
         const {id} = req.params;
         const orph = await getOrphId(id);
         res.send(orph);
