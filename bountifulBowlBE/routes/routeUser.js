@@ -50,7 +50,7 @@ const router = express.Router();
               const token = jwt.sign({id:userFromDB._id, role: userFromDB.role}, process.env.SECRET_KEY, {
                 // expriesIn:"1hr"
               });
-                res.send({ message: "Succefully Logged In", user:userFromDB,  token:token, roleId: userFromDB.roleId  });
+                res.send({ message: "Successfully Logged In", user:userFromDB,  token:token, roleId: userFromDB.roleId, role: userFromDB.role  });
     });
 
     
