@@ -17,14 +17,14 @@ const router = express.Router();
 
 
      // read all food
-    router.get("/foodlist", verifyToken(['Banquet-Manager','orphanage-manager']), async (req,res)=>{
+    router.get("/foodlist", async (req,res)=>{
           const fullfood = await getFoods();
           res.send(fullfood);
     });
 
 
     // read food by ID verifyToken(['Banquet-Manager','orphanage-manager'])
-    router.get("/foodlist/:id" , verifyToken(['Banquet-Manager','orphanage-manager']), async (req,res)=>{
+    router.get("/foodlist/:id" , async (req,res)=>{
       const {id} = req.params;
       const food = await getFoodId(id);
       res.send(food);
