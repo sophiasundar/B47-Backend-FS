@@ -6,6 +6,7 @@ import { userRouter } from "./routes/routeUser.js";
 import { foodRouter } from "./routes/routeFood.js";
 import { OrphManagerRouter } from "./routes/routeOrphanInfo.js";
 import nodemailer from 'nodemailer';
+import { emailRouter } from "./routes/routeEmail.js";
 
 
 
@@ -119,6 +120,8 @@ const MONGO_URL = process.env.MONGO_URL;
      //Orph Info
      app.use('/orphinfo',OrphManagerRouter);
      
+     //banquetmail
+     app.use('/banquet', emailRouter);
   
 
  app.listen(PORT, ()=> 
