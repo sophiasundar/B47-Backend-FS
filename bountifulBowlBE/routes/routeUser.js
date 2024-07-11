@@ -34,7 +34,7 @@ const router = express.Router();
           console.log(userFromDB);
 
           if(!userFromDB){
-            res.status(400).send({message: "Invalid Credentials"})
+            res.status(401).send({message: "Invalid Credentials"})
             return;
           }
 
@@ -42,7 +42,7 @@ const router = express.Router();
             const isPasswordMatch = await bcrypt.compare(password,passwordDb)
 
             if(!isPasswordMatch){
-                res.status(400).send({message:"Invalid Credentials"})
+                res.status(401).send({message:"Invalid Credentials"})
                 return;
             }
 
