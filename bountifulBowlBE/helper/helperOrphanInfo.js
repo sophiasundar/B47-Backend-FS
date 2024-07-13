@@ -22,3 +22,18 @@ export async function getOrphId(id){
     .collection("orphanageInfo")
     .findOne({_id : new ObjectId(id)});
 }
+
+export async function putOrph(id, updateOrph){
+    return await client
+    .db("bountiful")
+    .collection("orphanageInfo")
+    .updateOne({_id: new ObjectId(id)}, {$set:updateOrph})
+}
+
+
+export async function deleteById(id){
+    return await client
+    .db("bountiful")
+    .collection("orphanageInfo")
+    .deleteOne({_id: new ObjectId(id)})
+}

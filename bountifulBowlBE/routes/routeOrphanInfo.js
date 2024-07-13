@@ -1,6 +1,6 @@
 import { verifyToken } from "../middleware/auth.js";  
 import express from "express";
-import { addOrphManager, getOrphManagers, getOrphId } from '../helper/helperOrphanInfo.js';
+import { addOrphManager, getOrphManagers, getOrphId, putOrph, deleteById  } from '../helper/helperOrphanInfo.js';
 
 const router = express.Router();
 
@@ -14,17 +14,34 @@ const router = express.Router();
     });
 
       // read
-      router.get("/",  async (req,res)=>{
+      router.get("/", verifyToken(['Banquet-Manager','orphanage-manager']), async (req,res)=>{
         const allInfo = await getOrphManagers();
         res.send(allInfo);
   });
 
-      router.get("/:id", async (req,res)=>{
+      router.get("/:id", verifyToken(['Banquet-Manager','orphanage-manager']), async (req,res)=>{
         const {id} = req.params;
         const orph = await getOrphId(id);
         res.send(orph);
     });
 
+
+          // edit  
+     router.put("/:id", verifyToken(['orphanage-manager']), async (req,res)=>{
+      const {id} = req.params;
+      const updateOrph = req.body;
+      console.log(updateOrph);
+      const result = await putOrph(id, updateOrph);
+      res.send(result);
+ 
+     });
+
+          // delete 
+      router.delete("/:id",  verifyToken(['orphanage-manager']), async (req,res)=>{
+        const {id} = req.params;
+        const delOrph = await deleteById(id);
+        res.send(delOrph);
+      });
 
 
 
