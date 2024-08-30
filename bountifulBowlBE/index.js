@@ -72,6 +72,7 @@ const MONGO_URL = process.env.MONGO_URL;
                <p>${name}<p/>
             <p>${orphanagename}</p>
 
+            for futher contact refer this Bountiful Bowl: https://bountifulbowl-bn5k.vercel.app/
          `
       };
 
