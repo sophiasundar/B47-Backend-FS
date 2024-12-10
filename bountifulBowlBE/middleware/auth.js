@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 
-export const verifyToken = (allowedRoles) =>{
+export const verifyRoles = (allowedRoles) =>{
       return(req,res,next)=>{
     const headers = req.headers.authorization;
     console.log(headers);

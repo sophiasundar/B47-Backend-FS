@@ -7,7 +7,9 @@ import { foodRouter } from "./routes/routeFood.js";
 import { OrphManagerRouter } from "./routes/routeOrphanInfo.js";
 import nodemailer from 'nodemailer';
 import { emailRouter } from "./routes/routeEmail.js";
-
+import { adminRouter } from "./routes/routeAdmin.js";
+import { roleRouter } from "./routes/routeRoles.js";
+import { seedAdmin }  from './seedingAdmin.js'
 
 
 const app = express();
@@ -115,6 +117,12 @@ const MONGO_URL = process.env.MONGO_URL;
        //user
      app.use("/users", userRouter);
 
+      //  admin
+     app.use("/admin", adminRouter);
+
+   //   roleRouter
+     app.use('/roles',roleRouter)
+
      //foodlist
      app.use('/crud', foodRouter);
 
@@ -124,6 +132,7 @@ const MONGO_URL = process.env.MONGO_URL;
      //banquetmail
      app.use('/banquet', emailRouter);
   
+     seedAdmin();
 
  app.listen(PORT, ()=> 
     console.log("Server started on the PORT", PORT)

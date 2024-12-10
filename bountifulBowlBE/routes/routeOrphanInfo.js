@@ -1,12 +1,13 @@
-import { verifyToken } from "../middleware/auth.js";  
+import { verifyRoles } from "../middleware/auth.js";  
 import express from "express";
 import { addOrphManager, getOrphManagers, getOrphId, putOrph, deleteById  } from '../helper/helperOrphanInfo.js';
+import { ROLES } from "../roles.js";
 
 const router = express.Router();
 
 
     // create 
-    router.post("/", verifyToken(['orphanage-manager']), async (req,res)=>{
+    router.post("/", verifyRoles([ROLES.ORPHANAGE_MANAGER]), async (req,res)=>{
         const newInfo = req.body;
         console.log(newInfo);
         const result = await addOrphManager(newInfo);
@@ -14,12 +15,12 @@ const router = express.Router();
     });
 
       // read
-      router.get("/", verifyToken(['banquet-manager','orphanage-manager']), async (req,res)=>{
+      router.get("/", verifyRoles([ROLES.ORPHANAGE_MANAGER,ROLES.BANQUET_MANAGER]), async (req,res)=>{
         const allInfo = await getOrphManagers();
         res.send(allInfo);
   });
 
-      router.get("/:id", verifyToken(['banquet-manager','orphanage-manager']), async (req,res)=>{
+      router.get("/:id", verifyRoles([ROLES.ORPHANAGE_MANAGER,ROLES.BANQUET_MANAGER]), async (req,res)=>{
         const {id} = req.params;
         const orph = await getOrphId(id);
         res.send(orph);
@@ -27,7 +28,7 @@ const router = express.Router();
 
 
           // edit  
-     router.put("/:id", verifyToken(['orphanage-manager']), async (req,res)=>{
+     router.put("/:id", verifyRoles([ROLES.ORPHANAGE_MANAGER]), async (req,res)=>{
       const {id} = req.params;
       const updateOrph = req.body;
       console.log(updateOrph);
@@ -37,7 +38,7 @@ const router = express.Router();
      });
 
           // delete 
-      router.delete("/:id",  verifyToken(['orphanage-manager']), async (req,res)=>{
+      router.delete("/:id",  verifyRoles([ROLES.ORPHANAGE_MANAGER]), async (req,res)=>{
         const {id} = req.params;
         const delOrph = await deleteById(id);
         res.send(delOrph);
