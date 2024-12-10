@@ -9,7 +9,7 @@ const router = express.Router();
     // create read delete update by cater manager
 
     // create 
-    router.post("/foodlist", verifyRoles([ROLES.BANQUET_MANAGER]), async (req,res)=>{
+    router.post("/foodlist", verifyRoles([ROLES.BANQUET_MANAGER, ROLES.ADMIN]), async (req,res)=>{
         const newfoodList = req.body;
         console.log(newfoodList);
         const result = await addFoodList(newfoodList);
@@ -19,21 +19,21 @@ const router = express.Router();
 
 
      // read all food
-    router.get("/foodlist", verifyRoles([ROLES.BANQUET_MANAGER, ROLES.ORPHANAGE_MANAGER]), async (req,res)=>{
+    router.get("/foodlist", verifyRoles([ROLES.BANQUET_MANAGER, ROLES.ORPHANAGE_MANAGER, ROLES.ADMIN]), async (req,res)=>{
           const fullfood = await getFoods();
           res.send(fullfood);
     });
 
 
     // read food by ID verifyToken(['Banquet-Manager','orphanage-manager'])
-    router.get("/foodlist/:id" , verifyRoles([ROLES.BANQUET_MANAGER, ROLES.ORPHANAGE_MANAGER]), async (req,res)=>{
+    router.get("/foodlist/:id" , verifyRoles([ROLES.BANQUET_MANAGER, ROLES.ORPHANAGE_MANAGER, ROLES.ADMIN]), async (req,res)=>{
       const {id} = req.params;
       const food = await getFoodId(id);
       res.send(food);
 });
 
      // edit  
-     router.put("/foodlist/:id", verifyRoles([ROLES.BANQUET_MANAGER]), async (req,res)=>{
+     router.put("/foodlist/:id", verifyRoles([ROLES.BANQUET_MANAGER, ROLES.ADMIN]), async (req,res)=>{
           const {id} = req.params;
           const updateFood = req.body;
           console.log(updateFood);
@@ -43,7 +43,7 @@ const router = express.Router();
      });
 
     // delete 
-      router.delete("/foodlist/:id", verifyRoles([ROLES.BANQUET_MANAGER]), async (req,res)=>{
+      router.delete("/foodlist/:id", verifyRoles([ROLES.BANQUET_MANAGER, ROLES.ADMIN]), async (req,res)=>{
           const {id} = req.params;
           const delFood = await deleteById(id);
           res.send(delFood);
